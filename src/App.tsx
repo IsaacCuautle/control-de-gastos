@@ -1,3 +1,4 @@
+
 import BudgetForm from "./components/BudgetForm"
 
 
@@ -20,7 +21,8 @@ function App() {
       <div className="
         max-w-3xl 
         mx-auto
-        bg-white shadow-lg
+        bg-white 
+        shadow-lg
         rounded-lg
         mt-10
         p-10"

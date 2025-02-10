@@ -1,10 +1,15 @@
-import { ChangeEvent, useMemo, useState } from "react"
+import { ChangeEvent, useMemo, useState, FormEvent } from "react"
+
+
+import { useBudget } from "../hooks/useBudget";
 
 
 export default function BudgetForm() {
 
-    const [budget, setBudget] =  useState(0);
+    const [budget, setBudget] =  useState(0)
+    let { dispatch } = useBudget()
 
+    
     // Valida el presupouesto
     const isValid = useMemo( () => {
 
@@ -12,6 +17,17 @@ export default function BudgetForm() {
 
     }, [budget] )
 
+    
+    // Guarda en el state
+    const handleSubmmit = ( e : FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault();
+
+        dispatch( { type: 'add-budget', payload: { budget } } )
+        
+    }
+
+    
     // Incrementa el contador
     const handleChange = ( e : ChangeEvent<HTMLInputElement> ) => {
         
@@ -21,10 +37,7 @@ export default function BudgetForm() {
   
     return (
 
-        <form action="
-            space-y-5 
-        "
-        >
+        <form className="space-y-5" onSubmit={ handleSubmmit}>
 
             <div className = "flex flex-col space-y-5">
                 <label 
