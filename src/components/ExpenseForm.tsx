@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/style.css";
+import { useState, ChangeEvent } from "react";
+import DatePicker from 'react-date-picker';
+
 
 import { categories } from "../data/categories";
-import type { DraftExpense } from "../types";
+import type { DraftExpense, Value } from "../types";
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 
 export default function ExpenseForm() {
 
@@ -14,8 +16,30 @@ export default function ExpenseForm() {
     date : new Date()
   } )
 
-  const [selected, setSelected] = useState<Date>();
+  // Guarda los gastos de los datos
+  const handleChange = ( e: ChangeEvent<HTMLInputElement> |ChangeEvent<HTMLSelectElement> ) => {
 
+    const { name, value } = e.target
+    const isAmountField = ['amount'].includes(name)
+    
+    setExpense({
+      ...expense,
+      [name] : isAmountField ? Number(value) : value
+    })
+    
+  
+  }
+  
+  // Guarda la fecha
+  const handleChangeDate = ( value : Value ) => {
+    
+    setExpense({
+      ...expense,
+      date: value
+    });
+
+  }
+  
   return (
     <form className="space-y-5">
       <legend 
@@ -37,6 +61,7 @@ export default function ExpenseForm() {
           placeholder="Añade el Nombre del Gasto"
           className="bg-slate-200 p-2"
           name="expenseName"
+          onChange={handleChange}
         />
       </div>
 
@@ -48,6 +73,7 @@ export default function ExpenseForm() {
           Cantidad:
         </label>
         <input 
+          onChange={handleChange}
           value={expense.amount}
           type="text"
           id="amount"
@@ -69,6 +95,7 @@ export default function ExpenseForm() {
           id="category"
           className="bg-slate-200 p-2"
           name="category"
+          onChange={handleChange}
         >
           <option value="">-- Seleccione --</option>
           {categories.map( category => (
@@ -91,24 +118,10 @@ export default function ExpenseForm() {
         >
           Fecha del Gasto:
         </label>
-       <DayPicker
+       <DatePicker
           className="bg-slate-100 p-2 border-0"
-          mode="single"
-          selected= { expense.date }
-          onSelect= { 
-            
-            (date) => {
-            
-              if (date) {
-               
-                // Actualiza expense.date con la nueva fecha seleccionada
-                setExpense((prevExpense) => ({ ...prevExpense, date })); 
-              
-              }
-
-            } 
-          }
-          footer= { selected ? `Selected: ${ expense.date.toLocaleDateString() }` : "Pick a day." }
+          value= { expense.date }
+          onChange= { handleChangeDate }
        />
       </div>
 

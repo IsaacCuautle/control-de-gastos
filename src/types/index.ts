@@ -4,10 +4,14 @@ export type Expense =
     amount : number
     expenseName : string
     category : ''
-    date :  Date
+    date : Value
 }
-
 export type DraftExpense =  Omit<Expense, 'id'>
+
+export type ValuePiece = Date | null;
+export type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+
 
 export type Category = 
 {
