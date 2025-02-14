@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import DatePicker from 'react-date-picker';
 
 
@@ -6,6 +6,7 @@ import { categories } from "../data/categories";
 import type { DraftExpense, Value } from "../types";
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import ErrorMessage from "./ErrorMessage";
 
 export default function ExpenseForm() {
 
@@ -16,7 +17,27 @@ export default function ExpenseForm() {
     date : new Date()
   } )
 
-  // Guarda los gastos de los datos
+  const [ error, setError ] = useState('');
+
+  // Sube los cambios del formulario
+  const handleSubmit = ( e : FormEvent<HTMLFormElement> ) => {
+
+      e.preventDefault()
+
+      // Validacion del formulario
+      if ( Object.values(expense).includes('') ) {
+        setError('Todos los campos son obligatorios');
+        return
+      } 
+
+      // TODO: Almacenar los gastos en dispatch
+      console.log('Todos los campos son correctos');
+      return
+
+  }
+
+
+  // Cambia el nombre y el valor de gastos
   const handleChange = ( e: ChangeEvent<HTMLInputElement> |ChangeEvent<HTMLSelectElement> ) => {
 
     const { name, value } = e.target
@@ -30,7 +51,7 @@ export default function ExpenseForm() {
   
   }
   
-  // Guarda la fecha
+  // Cambia la fecha
   const handleChangeDate = ( value : Value ) => {
     
     setExpense({
@@ -41,40 +62,42 @@ export default function ExpenseForm() {
   }
   
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={ handleSubmit }>
       <legend 
         className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
         Nuevo Gasto
       </legend>
 
+      { error && <ErrorMessage>{error}</ErrorMessage> }
+
       <div className="flex flex-col gap-2">
         <label 
-          htmlFor=""
+          htmlFor="expenseName"
           className="text-xl"
         >
           Nombre Gasto:
         </label>
         <input 
-          value={expense.expenseName}
+          value={ expense.expenseName }
           type="text"
           id="expenseName"
           placeholder="Añade el Nombre del Gasto"
           className="bg-slate-200 p-2"
           name="expenseName"
-          onChange={handleChange}
+          onChange={ handleChange }
         />
       </div>
 
       <div className="flex flex-col gap-2">
         <label 
-          htmlFor=""
+          htmlFor="amount"
           className="text-xl"
         >
           Cantidad:
         </label>
         <input 
-          onChange={handleChange}
-          value={expense.amount}
+          onChange={ handleChange }
+          value={ expense.amount }
           type="text"
           id="amount"
           placeholder="Añade la Cantidad del Gasto"
@@ -85,35 +108,36 @@ export default function ExpenseForm() {
 
       <div className="flex flex-col gap-2">
         <label 
-          htmlFor=""
+          htmlFor="category"
           className="text-xl"
         >
           Categoria:
         </label>
         <select 
-          value={expense.category}
+          value={ expense.category }
           id="category"
           className="bg-slate-200 p-2"
           name="category"
-          onChange={handleChange}
+          onChange={ handleChange } 
         >
           <option value="">-- Seleccione --</option>
-          {categories.map( category => (
+          {
+            categories.map( category => (
             
-            <option
-              key={category.id}
-              value={category.id}
-            >
-              {category.name}
-            </option>
+              <option
+                key={ category.id }
+                value={ category.id }
+              >
+                { category.name }
+              </option>
 
-          ))}
+            ))
+          }
         </select>
       </div>
 
       <div className="flex flex-col gap-2">
         <label 
-          htmlFor=""
           className="text-xl"
         >
           Fecha del Gasto:
@@ -126,7 +150,7 @@ export default function ExpenseForm() {
       </div>
 
       <input 
-        type="submmit"
+        type="submit"
         className="
           bg-blue-600 
           cursor-pointer 
@@ -136,6 +160,7 @@ export default function ExpenseForm() {
           font-bold 
           rounded-lg 
           text-center"
+        onChange={ e => {} }
         value="Registrar Gasto"
       />
 
