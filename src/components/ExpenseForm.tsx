@@ -7,6 +7,8 @@ import type { DraftExpense, Value } from "../types";
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import ErrorMessage from "./ErrorMessage";
+import { useBudget } from "../hooks/useBudget";
+
 
 export default function ExpenseForm() {
 
@@ -18,6 +20,7 @@ export default function ExpenseForm() {
   } )
 
   const [ error, setError ] = useState('');
+  const { dispatch } = useBudget();
 
   // Sube los cambios del formulario
   const handleSubmit = ( e : FormEvent<HTMLFormElement> ) => {
@@ -30,10 +33,19 @@ export default function ExpenseForm() {
         return
       } 
 
-      // TODO: Almacenar los gastos en dispatch
-      console.log('Todos los campos son correctos');
-      return
+      // Agregar un nuevo gasto
+      dispatch( { type : 'add-expense', payload : {expense} } )
+      
+      
+      // Reiniciar el state
+      setExpense ({
 
+        amount : 0,
+        expenseName: '',
+        category: '',
+        date: new Date()
+      
+      })
   }
 
 
@@ -44,8 +56,10 @@ export default function ExpenseForm() {
     const isAmountField = ['amount'].includes(name)
     
     setExpense({
+
       ...expense,
       [name] : isAmountField ? Number(value) : value
+    
     })
     
   
