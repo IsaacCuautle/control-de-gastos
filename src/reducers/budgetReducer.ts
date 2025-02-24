@@ -2,7 +2,6 @@ import { v4 as uuid } from 'uuid'
 
 import { DraftExpense, Expense } from "../types"
 
-
 export type BudgetActions = 
 {
     type : 'add-budget',
@@ -17,6 +16,10 @@ export type BudgetActions =
 {
     type : 'add-expense',
     payload : { expense : DraftExpense}
+} |
+{
+    type : 'remove-expense',
+    payload : { id : Expense['id']}
 }
 
 
@@ -94,6 +97,20 @@ export const BudgetReducer = (
 
             ...state,
             expenses : [ ...state.expenses, expense ],
+            modal : false
+
+        }
+
+    }
+    
+    if ( action.type === 'remove-expense' ) {
+
+        return {
+
+            ...state,
+            expenses : state.expenses.filter( 
+                expense => expense.id !== action.payload.id
+            ),
             modal : false
 
         }
