@@ -37,7 +37,9 @@ export default function ExpenseDetail( { expense } : ExpenseDetailProps ) {
 
     <LeadingActions>
       <SwipeAction
-        onClick={ () => {} }
+        onClick={ () => dispatch( 
+          { type : 'get-expense-by-id', payload : { id : expense.id } } 
+        ) }
       >
         Actualizar
       </SwipeAction>
@@ -50,7 +52,7 @@ export default function ExpenseDetail( { expense } : ExpenseDetailProps ) {
     <TrailingActions>
       <SwipeAction
         onClick={ () => dispatch( 
-          { type: 'remove-expense', payload: { id: expense.id} } 
+          { type: 'remove-expense', payload: { id: expense.id } } 
         ) }
         destructive={ true }
       >
