@@ -19,11 +19,11 @@ export type BudgetActions =
 } |
 {
     type : 'remove-expense',
-    payload : { id : Expense['id']}
+    payload : { id : Expense['id'] }
 } |
 {
     type : 'get-expense-by-id',
-    payload : { id : Expense['id']}
+    payload : { id : Expense['id'] }
 } |
 {
     type : 'update-expense',
@@ -51,11 +51,27 @@ const createExpense = ( draftExpense : DraftExpense) : Expense =>  {
 
 }
 
+const intialBudget = () : number => {
+
+    const localStorageBudget = localStorage.getItem('budget')
+
+    return localStorageBudget ? +localStorageBudget : 0
+
+}
+
+const localStorageExpenses = () : Expense[] => {
+
+    const localStorageExpenses = localStorage.getItem('expenses')
+
+    return localStorageExpenses ? JSON.parse(localStorageExpenses) : []
+
+}
+
 export const initialState : BudgetState = {
     
-    budget : 0,
+    budget : intialBudget(),
     modal : false, 
-    expenses : [],
+    expenses : localStorageExpenses(),
     editingId : ''
 
 }
