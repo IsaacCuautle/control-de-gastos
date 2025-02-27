@@ -1,31 +1,42 @@
-import AmountDisplayed from "./AmountDisplayed"
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar"
+import 'react-circular-progressbar/dist/styles.css'
 
+import AmountDisplayed from "./AmountDisplayed"
 import { useBudget } from "../hooks/useBudget"
-import { useMemo } from "react"
 
 export default function BudgetTracker() {
 
-    const { state } = useBudget()
+    const { dispatch, state, totalExpenses, remainingBudget } = useBudget()
 
-    const totalExpenses = useMemo( 
-        () => state.expenses.reduce( 
-            (total, expense) => expense.amount + total, 0
-        ), [state.expenses]
-    )
-
-    const reimingBudget = state.budget - totalExpenses;
+    const percentage = +( (totalExpenses * 100) / state.budget ).toFixed(2)
+    console.log(percentage)
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             
+            {/* Grafica */}
             <div className="flex justify-center">
-                <img src="/grafico.jpg" alt="grafica de gastos" />
+                <CircularProgressbar
+                    value={ percentage }
+                    styles={ buildStyles({
+
+                        pathColor: percentage === 100 ? '#DC2626' : '#3B82F6',
+                        trailColor: '#F2F2F2',
+                        textSize: 10,
+                        textColor: percentage === 100 ? '#DC2626' : '#3B82F6'
+
+                    }) }
+                    text={`${percentage}% Gastado`}
+                />
             </div>
         
             <div className="flex flex-col justify-center items-center gap-8">
                 <button 
                     type="button" 
-                    className="bg-pink-600 w-full p-2 text-white uppercase font-bold rounded-lg"
+                    className="bg-pink-600 w-full p-2 text-white uppercase font-bold rounded-lg cursor-pointer hover:bg-pink-800"
+                    onDoubleClick={
+                        () => dispatch( { type : 'reset' } )
+                    }
                 >
                     Resetear
                 </button>
@@ -37,7 +48,7 @@ export default function BudgetTracker() {
                 
                 <AmountDisplayed
                     label="Disponible"
-                    amount={ reimingBudget }
+                    amount={ remainingBudget }
                 />
                 
                 <AmountDisplayed
