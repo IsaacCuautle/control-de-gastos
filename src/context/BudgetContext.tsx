@@ -1,7 +1,7 @@
 import { useReducer, createContext, Dispatch, ReactNode, useMemo } from "react"
 
 import { BudgetActions, BudgetReducer, BudgetState, initialState } from "../reducers/budgetReducer"
-import { useBudget } from "../hooks/useBudget"
+import { Expense } from "../types"
 
 
 type BudgetContextProps = {
@@ -28,7 +28,7 @@ export const BudgetProvider = ( { children } : BudgetProviderProps ) => {
 
     const totalExpenses = useMemo( 
         () => state.expenses.reduce( 
-            (total, expense) => expense.amount + total, 0
+            (total : number, expense : Expense) => expense.amount + total, 0
         ), [state.expenses]
     )
 

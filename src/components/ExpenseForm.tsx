@@ -217,7 +217,6 @@ export default function ExpenseForm() {
           font-bold 
           rounded-lg 
           text-center"
-        onChange={ e => {} }
         value={ state.editingId ? 'Guardar Cambios' : 'Registrar Gasto' }
       />
 

@@ -9,7 +9,6 @@ export default function BudgetTracker() {
     const { dispatch, state, totalExpenses, remainingBudget } = useBudget()
 
     const percentage = +( (totalExpenses * 100) / state.budget ).toFixed(2)
-    console.log(percentage)
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
