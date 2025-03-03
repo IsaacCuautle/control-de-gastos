@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
+# Control de Gastos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicación web permite a los usuarios gestionar sus gastos de manera efectiva. Fue desarrollada utilizando tecnologías modernas como React, Tailwind CSS y Vite. El proyecto se enfoca en ofrecer una interfaz intuitiva para visualizar gastos de forma gráfica, categorizarlos y filtrarlos según sea necesario. Además, permite actualizar y eliminar gastos (arrastrandolos a la izquierda o derecha respectivamente) existentes, y resetear la aplicación si es necesario.
 
-Currently, two official plugins are available:
+Durante su desarrollo, se abordo el uso de Tailwind CSS, y el manejo de estados complejos con Context API y componentes reutilizables. Además, se exploró el uso de `useReducer` para gestionar estados complejos, aunque en este proyecto se optó por Context API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Imagenes del proyecto
 
-## Expanding the ESLint configuration
+A continuación, se muestran algunas capturas de pantalla del proyecto:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
+<div
+  class="imagenes"  
+  style="
+  display: flex;"
+>
+<img 
+  style="
+    width: 400px; 
+    heigth: 100px; "
+  src='https://github.com/user-attachments/assets/6825dd7c-a8cf-4967-aa64-b033e9937b18'  
+/>
+<img 
+  style="
+    width: 150px; 
+    heigth: 500px;"
+  height="340"
+  src='https://github.com/user-attachments/assets/927b313c-9960-4c53-8c21-015b2148a2e0'
+/>
+</div>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Instrucciones
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Para ejecutar el proyecto, sigue estos pasos:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Clonar el repositorio**: `git clone https://github.com/IsaacCuautle/control-de-gastos.git`
+2. **Instalar dependencias**: `npm install`
+3. **Ejecutar el proyecto**: `npm run dev`
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Tecnologias utilizadas
+
+El proyecto utiliza las siguientes tecnologías:
+
+- **Frontend**: React ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+- **Estilos**: Tailwind CSS ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+- **Build Tool**: Vite ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+- **Componentes UI**: Headless UI, Heroicons
+- **Librerías adicionales**: React Circular Progressbar, React Date Picker, React Swipeable List
+
+Puedes probar la aplicación en vivo [aqui!](https://planeador-de-gastos.netlify.app/).
